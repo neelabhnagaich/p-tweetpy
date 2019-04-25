@@ -1,0 +1,11 @@
+
+
+{%extends 'base.html'%}
+
+
+{% block title %} Create| {{block.super}}{% endblock title%}
+
+{% block content %} 
+{% include 'tweets/forms.html' with form=form action_url=create_url btn_value='post'%}
+
+{% endblock content%}

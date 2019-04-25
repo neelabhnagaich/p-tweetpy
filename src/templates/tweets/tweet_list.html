@@ -1,0 +1,116 @@
+
+
+
+{%extends 'base.html'%}
+{% load recommended %}
+
+{% block scripts %}
+<script>
+
+  $(document).ready(function () {
+
+    
+
+    loadTweetContainer("tweet-container");
+  })
+
+</script>
+
+
+{%endblock scripts %}
+
+{% block title %} Tweets| {{block.super}}{% endblock title%}
+
+{% block content %} 
+
+<!-- 
+<div class="row">
+    <div class="col-sm-3" style="background-color:red;">
+       <h3> {{request.user}}</h3>
+    </div>
+    
+    -->
+   
+    <div class="col-lg-4 gayab">
+   
+        <div class="dashboard" style="margin-top: 80px;">
+            <div class="card m-0" style="width: 300px" >
+                     <img class="card-img-top" src="https://source.unsplash.com/random/300x200" alt=""> 
+                              
+                    <div class="card-body mr-0">
+                        <h4 class="card-title text-center"><i class="fas fa-user-graduate"></i>
+        
+          {{request.user}}</h4>
+                        <p class="card-text ">No. of Tweets : <span class="font-weight-bold ml-3">   21</span></p>
+                        <p class="card-text ">No. of Folllowers :<span class="font-weight-bold ml-3" > 34</span> </p>
+                        <a class="btn btn-success btn-block" href="/user/{{request.user}}">Go to Profile<i class="fas fa-arrow-circle-right ml-3"></i>
+        
+        </a>
+                    </div>
+                </div>
+        </div>
+        <br>
+        <br>
+        <div class="recommended">
+            <h2>Recommended User</h2>
+            {% recommended request.user %}
+            
+        </div>
+       
+        </div>
+
+        <!-- tweet form  -->
+
+    <div class="col-lg-8 ">
+      {% if not request.GET.q%}
+       
+        <div class="" style="margin-top: 80px;">
+          <h2 class="d-inline">Feeds/:</h2>
+            <button class="btn btn-outline-success float-right d-inline" data-toggle="collapse" data-target="#collapse-btn-6">COMPOSE :</button>
+            <div class="collapse mb-5" id="collapse-btn-6">
+              <div class="card " style="margin-top: 80px;">
+                <div class="card-body">
+                  <div class="form-group ">
+                    <label class="font-weight-bold" for="message">Show your creativity /Write your own blog </label>
+                    <!-- <textarea class="form-control" id="message" rows="3"></textarea> -->
+                    <form  method="post"   class = "tweet-form" >{% csrf_token %}
+                       {{ createform.as_p  }}
+                     
+                      <input class="btn btn-outline-dark mr-3  " type="submit" value="Tweet">
+              
+                     
+                  </form>
+                  </div>
+    
+                </div>
+    
+    
+              </div>
+            </div>
+          </div>
+           <br>
+            <br>
+       
+        {% endif%}
+
+    <div id="tweet-container" data-url='/api/tweet'>
+      <hr>
+      
+    </div>
+        <a href="#" class="loadmore">Load More</a>
+
+
+
+
+
+           
+  </div>
+
+
+
+
+{% endblock content%}
+
+
+
+<!-- hjdssssssssssssssssssssssssssssssss -->

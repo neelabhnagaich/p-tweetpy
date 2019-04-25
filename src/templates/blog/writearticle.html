@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+
+
+
+{% block title %} Blog | {{block.super}}{% endblock title%}
+
+{%block style%}
+{{form.media}}
+
+{% endblock style%}
+
+
+
+{% block content %}
+
+<div class="container ">
+  <div style="margin-top: 80px;">
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="/blog/">Article</a>
+      </li>
+      <li class="breadcrumb-item active">Write article</li>
+    </ol>
+
+
+    <!-- 
+        <label class="font-weight-bold" for="basic-url">Custom URL</label>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">https://something.com/ImageURL/</span>
+            </div>
+            <input type="text" class="form-control">
+        </div> -->
+
+    <!-- <textarea class="form-control mb-3" id="message" rows="8"></textarea> -->
+
+    <form action="{% url 'blog:blog-create' %}" method="post">
+      {% csrf_token %}
+
+
+      <label class="font-weight-bold" for="name">Title</label>
+      <!-- <input class="form-control mb-3" type="text" id="name" name="title" placeholder=" Title Name. . . .  "> -->
+      {{form.title | add_class:"form-control mb-3"| attr:"id:name" }}
+
+      <p class="font-weight-bold" >CONTENT :</p>
+      <!-- <textarea name="editor1"></textarea> -->
+    <!-- <script> -->
+       <!-- CKEDITOR.replace('editor1'); -->
+
+      <!-- </script> -->
+      <!-- <textarea class="form-control mb-3" id="message" name="editor1" rows="8"></textarea>  -->
+      {{form.content| add_class:"form-control mb-3" }}
+      <br>
+      <br>
+      <p class="font-weight-bold">Tags :/</p>
+      <!-- <input class="mb-1 border-primary" style="border-radius:2px;" type="text" name="tag"> -->
+      {{form.tags | add_class:"mb-1 border-primary"}}
+      <p class="text-muted">A comma-separated list of tags</p>
+      <input class="btn btn-outline-danger d-block mb-3" type="submit" value="submit">
+
+
+
+
+
+
+    </form>
+
+
+
+  </div>
+
+
+</div>
+
+{% endblock content%}

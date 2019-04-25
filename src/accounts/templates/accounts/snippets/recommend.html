@@ -1,0 +1,26 @@
+
+
+<!-- <p>
+        <a  style='color:inherit;'href="/user/{{profile.user.username}}/"><span style="font-style:initial">{{profile.user.username}}</span></a>
+         <a href="/user/{{profile.user.username}}" class="btn btn-outline-success btn-sm" > Follow
+        </a>
+       
+</p> -->
+
+<div class="table">
+        <table class="table-responsive">
+                        {% for profile in recommended %}
+                <tr>
+                        <td>
+        <a  style='color:inherit;'href="/user/{{profile.user.username}}/"><span style="font-style:initial">{{profile.user.username}}</span></a>
+
+                        </td>
+                        <td>
+                                        <a href="/user/{{profile.user.username}}" class="btn btn-outline-success btn-sm" > Follow
+                                        </a> 
+                        </td>
+                </tr>
+
+{% endfor %}
+        </table>
+</div>

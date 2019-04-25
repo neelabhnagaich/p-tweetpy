@@ -1,0 +1,255 @@
+
+{% load widget_tweaks %}
+<html>
+<head>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<title>Chat x Channels Rapidly</title>
+
+    {% include 'chat/css.html' %}
+
+
+
+</head>
+<body>
+    {%include 'navbar.html'%}
+<div class="container" style='margin-top:120px'>
+<h3 class=" text-center">Messaging Thread</h3>
+<div class="messaging">
+      <div class="inbox_msg">
+        <div class="inbox_people">
+          <div class="headind_srch">
+            <div class="recent_heading">
+              <h4>Recent</h4>
+            </div>
+            <div class="srch_bar">
+              <div class="stylish-input-group">
+                <input type="text" class="search-bar"  placeholder="Search" >
+                <span class="input-group-addon">
+                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                </span> </div>
+            </div>
+          </div>
+          <div class="inbox_chat">
+            
+              {{objects.username}}
+            {% for people in object_list %}
+
+            <div class="chat_list" data='{{people.username}}'>
+                        <div class="chat_people">
+                          <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="{{people.username}}"> </div>
+                          <div class="chat_ib">
+                            <h5>{{people}} </h5>
+                            <p></p>
+                          </div>
+                        </div>
+                      </div>
+
+
+      
+
+
+
+
+
+
+            
+           {% endfor%}
+            
+          </div>
+        </div>
+        <div class="mesgs">
+          <div class="msg_history" id='chat-items'>
+          
+
+          
+         
+        
+  
+
+           
+
+            <!-- <div class="incoming_msg">
+              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+              <div class="received_msg">
+                <div class="received_withd_msg">
+                  <p>Test, which is a new approach to have</p>
+                  <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
+              </div>
+            </div>
+            <div class="outgoing_msg">
+              <div class="sent_msg">
+                <p>Apollo University, Delhi, India Test</p>
+                <span class="time_date"> 11:01 AM    |    Today</span> </div>
+            </div>
+            <div class="incoming_msg">
+              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+              <div class="received_msg">
+                <div class="received_withd_msg">
+                  <p>We work directly with our designers and suppliers,
+                    and sell direct to you, which means quality, exclusive
+                    products, at a price anyone can afford.</p>
+                  <span class="time_date"> 11:01 AM    |    Today</span></div>
+              </div>
+            </div> -->
+          </div>
+          <!-- <div class="type_msg">
+            <div class="input_msg_write">
+                    <form id='form'  method='POST' > {% csrf_token %}
+                            <input type='hidden' id='uname' value='{{request.user}}' class='btn btn-primary'/>
+                    {{form.message | add_class:"write_msg"| attr:"placeholder:Type a message" }}
+                    <button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                    </form> -->
+              <!-- <input type="text" class="write_msg" placeholder="Type a message" /> -->
+              <!-- <input type='hidden' id='uname' value='{{user}}' class='btn btn-primary'/> -->
+              <!-- <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button> -->
+            <!-- </div>
+          </div> -->
+        </div>
+      </div>
+      
+     
+    </div></div>
+    </body>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js"></script>
+
+<script>
+// websocket scripts
+
+var loc = window.location
+var wsStart = 'ws://'
+console.log(loc)
+
+var form = $('#form')
+var formInputId = $('#id_message')
+var chatContainer = $("#chat-items")
+
+var logedUserId = $('#uname') 
+
+if (loc.protocol=='https://'){
+    wsStart = 'wss://'
+}
+
+
+var endpoint = wsStart + loc.host + loc.pathname
+console.log(endpoint)
+console.log("endpoint")
+
+
+var socket = new ReconnectingWebSocket(endpoint)
+
+socket.onmessage = function(e){
+    
+    receivedData = JSON.parse(e.data)
+   
+    if(logedUserId.val()!=receivedData.username){
+
+        chatContainer.append(`
+
+               
+           <div class="incoming_msg">
+                <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                <div class="received_msg">
+                  <div class="received_withd_msg">
+                    <p>${receivedData.message}</p>
+                    <span class="time_date"> 11:01 AM    |    June 9 | ${receivedData.username}</span>
+                  </div>
+                </div>
+              </div>
+  
+        
+        
+        `)
+
+
+    }
+
+    else{
+
+        chatContainer.append(`
+
+
+        <div class="outgoing_msg">
+                <div class="sent_msg">
+                  <p>${receivedData.message}</p>
+                  <span class="time_date"> 11:01 AM    |    June 9  |  ${receivedData.username} </span> </div>
+              </div>
+  
+
+        
+        
+        `)
+
+
+    }
+    window.scrollTo(0,700);
+
+    
+} 
+socket.onopen = function(e){
+    console.log('open',e)
+    form.submit(function(event){
+        event.preventDefault();
+
+        var formdata = formInputId.val()
+        //chatContainer.append(`<li>${formdata} via ${$('#uname').val()} </li>`)
+
+
+        var data  = {
+            'message':formdata
+        }
+
+        socket.send(JSON.stringify(data))
+        formInputId.val('')
+
+
+
+
+    })
+}
+socket.onerror = function(e){
+    console.log('error')
+}
+socket.onclose = function(e){
+    console.log('close')
+}
+
+$(".chat_list").click(function(e) {
+  console.log( "Handler for .click() called.",e);
+  var uname = e.currentTarget.attributes['data'].value;
+  window.location.href = `/messages/${uname}`;
+  
+});
+
+
+</script>
+
+
+
+</html>

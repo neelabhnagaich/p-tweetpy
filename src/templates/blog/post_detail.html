@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load markdown_deux_tags %}
+
+{% block title %} Blog | {{block.super}}{% endblock title%}
+
+
+
+ {% block content %} 
+ <div class="container">
+    <div style="margin-top: 80px;">
+        <h2 class="d-inline">Articles</h2>
+   <button class="btn btn d-inline btn-danger float-right"><i class="fas fa-pen-fancy"></i>
+   
+    <a style="text-decoration: none; color: inherit;" href="writearticle.html">Edit Article</a></button>
+    </div>
+   <br>
+
+
+  
+    <div class="row">
+   
+        <div class="col-12">
+            <article class="media content-section">
+                <div class="media-body">
+                  <div class="article-metadata">
+                    <a class="mr-2" href="#">{{ post.author }}</a>
+                    <small class="text-muted">{{ post.date_posted }}</small>
+                  </div>
+                  
+                  <h2><a class="article-title" style="color:inherit;" href="/blog/detail/{{post.id}}">{{ post.title }}</a></h2>
+                  <hr>
+                  <div class="container">
+
+                       <p> {{ post.content| markdown }}  </p>
+
+                  </div>
+                 
+                 
+                  <p>Tags
+                    {%for tags in post.tags.all%}
+                    <a href="/blog/search/{{tags}}"><span class="badge badge-pill badge-dark">{{tags}}</span></a>
+                    {% endfor %}
+                  </p>
+                </div>
+                <hr>
+            </article>
+            <hr>
+
+            <div class="well">
+                    <h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-reply"></i> Submit</button>
+                    </form>
+                </div>
+            
+                <hr>
+            
+        
+                <h4><i class="fa fa-comment"></i> User One says:
+                    <small> 9:41 PM on August 24, 2014</small>
+                </h4>
+                <p>Excellent post! Thank You the great article, it was useful!</p>
+        
+                <h4><i class="fa fa-comment"></i> User Two says:
+                    <small> 9:47 PM on August 24, 2014</small>
+                </h4>
+                <p>Excellent post! Thank You the great article, it was useful!</p>
+    
+        </div>
+    </div>
+</div>
+
+
+
+   
+
+      
+{% endblock content%}
